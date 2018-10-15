@@ -39,7 +39,12 @@ namespace Sitecore.Support.Framework.Publishing.ManifestCalculation
     private readonly bool _contentAvailabilityEnabled;
 
     private readonly string _sourceStore;
+
     private readonly Dictionary<Guid, IPublishableWorkflowState> _publishableStates;
+    private readonly Dictionary<Guid, IPublishableWorkflowState> _publishableStatesFinal;
+    private readonly Dictionary<Guid, IPublishableWorkflowState> _publishableStatesPreview;
+
+
     private readonly ITemplateGraph _publishingTemplateGraph;
     private readonly ICompositeItemReadRepository _itemReadRepo;
     private readonly IItemRelationshipRepository _itemRelationshipRepo;
@@ -76,6 +81,10 @@ namespace Sitecore.Support.Framework.Publishing.ManifestCalculation
       // Load the publishCandidate workflow states into memory (there won't be many)
       _publishableStates = workflowRepo.GetPublishableStates(PublishingConstants.WorkflowFields.Final, PublishingConstants.WorkflowFields.PreviewPublishTarget).Result
           .ToDictionary(s => s.StateId, s => s);
+      _publishableStatesFinal = workflowRepo.GetPublishableStates(PublishingConstants.WorkflowFields.Final, PublishingConstants.WorkflowFields.Final).Result
+        .ToDictionary(s => s.StateId, s => s);
+      _publishableStatesPreview = workflowRepo.GetPublishableStates(PublishingConstants.WorkflowFields.PreviewPublishTarget, PublishingConstants.WorkflowFields.PreviewPublishTarget).Result
+        .ToDictionary(s => s.StateId, s => s);
     }
 
     public async Task<IPublishCandidate> GetNode(Guid id)
@@ -443,6 +452,8 @@ namespace Sitecore.Support.Framework.Publishing.ManifestCalculation
         var nextVariances = variantFields.Where(x => x.Key.Language.Equals(variantFields[i].Key.Language)
                    && x.Key.Version > variantFields[i].Key.Version).ToList();
 
+        
+
         if (_contentAvailabilityEnabled && DateTime.Equals(validTo, MaxUtc) && nextVariances.Any())
         {
           var nextVariance = nextVariances.FirstOrDefault(x => x.Key.Version == variantFields[i].Key.Version + 1);
@@ -453,8 +464,17 @@ namespace Sitecore.Support.Framework.Publishing.ManifestCalculation
                                               nextVariance.Value,
                                               PublishingConstants.WorkflowFields.WorkflowState,
                                               null);
-
-            if (!nextVarianceWorkflowState.HasValue || _publishableStates.ContainsKey(nextVarianceWorkflowState.Value))
+            var currentWorkflowState = ParseSitecoreGuidField(
+              variant.Value,
+              PublishingConstants.WorkflowFields.WorkflowState,
+              null);
+            bool bothVariantsHaveWfState = nextVarianceWorkflowState.HasValue && currentWorkflowState.HasValue;
+            bool variantsHaveSamePublishableWorkflow = bothVariantsHaveWfState &&
+                                            (
+                                              (_publishableStatesPreview.ContainsKey(nextVarianceWorkflowState.Value) && _publishableStatesPreview.ContainsKey(currentWorkflowState.Value)) ||
+                                             (_publishableStatesFinal.ContainsKey(nextVarianceWorkflowState.Value) && _publishableStatesFinal.ContainsKey(currentWorkflowState.Value))
+                                             );
+            if (!nextVarianceWorkflowState.HasValue || variantsHaveSamePublishableWorkflow)
             {
               validTo = ParseSitecoreDateField(nextVariance.Value,
                                                PublishingConstants.PublishingFields.Versioned.ValidFrom,

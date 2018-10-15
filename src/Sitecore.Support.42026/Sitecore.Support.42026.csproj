@@ -28,7 +28,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\</OutputPath>
+    <OutputPath>.\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -47,47 +47,60 @@
     <Reference Include="Microsoft.AspNetCore.Hosting.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Microsoft.AspNetCore.Hosting.Abstractions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Common.Extensions">
       <HintPath>libs\Sitecore.Framework.Common.Extensions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Conditions">
       <HintPath>libs\Sitecore.Framework.Conditions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Configuration.Extensions">
       <HintPath>libs\Sitecore.Framework.Configuration.Extensions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Eventing.Abstractions">
       <HintPath>libs\Sitecore.Framework.Eventing.Abstractions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Publishing, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Sitecore.Framework.Publishing.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Publishing.Abstractions, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Sitecore.Framework.Publishing.Abstractions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Publishing.Common, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>libs\Sitecore.Framework.Publishing.Common.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Publishing.Configuration">
       <HintPath>libs\Sitecore.Framework.Publishing.Configuration.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Publishing.Data">
       <HintPath>libs\Sitecore.Framework.Publishing.Data.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Framework.Publishing.Service.Abstractions">
       <HintPath>libs\Sitecore.Framework.Publishing.Service.Abstractions.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\packages\SC.Sitecore.Kernel.9.0.2\lib\Sitecore.Kernel.dll</HintPath>
@@ -114,7 +127,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Config\Include\zzz\Sitecore.Support.42026.config" />
+    <Content Include="config\global\Sitecore.Support.42026.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
